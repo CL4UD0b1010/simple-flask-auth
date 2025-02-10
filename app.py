@@ -24,9 +24,9 @@ def load_user(user_id):
 
 @app.post("/login")
 def login():
-    data = request.get_json()
-    username = data.get["username"]
-    password = data.get["password"]
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
 
     if username and password:
 
