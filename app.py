@@ -72,6 +72,21 @@ def read_user(id_user):
     return jsonify({"Message":"User not found"}), 404
 
 
+@app.put("/user/<int:id_user>")
+@login_required
+def update_user(id_user):
+    user = User.query.get(id_user)
+    data = request.json
+
+    if user and data.get("password"):
+        user.password = data.get("password")
+        db.session.commit()
+
+
+        return jsonify({"Message": f"User {user.username} updated!"})
+
+    return jsonify({"Message":"User not found"}), 404
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
