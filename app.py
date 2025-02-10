@@ -61,6 +61,16 @@ def create_user():
     
     return jsonify({"Message": "Invalid input"}), 401
 
+@app.get("/user/<int:id_user>")
+@login_required
+def read_user(id_user):
+    user = User.query.get(id_user)
+
+    if user:
+        return {"username": user.username}
+    
+    return jsonify({"Message":"User not found"}), 404
+
 
 
 if __name__ == '__main__':
