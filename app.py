@@ -88,5 +88,19 @@ def update_user(id_user):
     return jsonify({"Message":"User not found"}), 404
 
 
+@app.delete("/user/<int:id_user>")
+@login_required
+def delete_user(id_user):
+    user = User.query.get(id_user)
+
+    if user and id_user != current_user.id:
+        db.session.delete(user)
+        db.commit()
+
+        return {"Message": f"User {id_user} deleted"}
+    
+    return jsonify({"Message":"User not found"}), 404
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
